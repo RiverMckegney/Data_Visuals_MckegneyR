@@ -80,6 +80,7 @@ Use the help page for `geom_histogram` to make the bins 2 units wide.
 
 ```{r}
 #| label: histogram binwidth adjust
+#| fig-cap: Histogram with binwidth = 2
 
 ggplot(data = mpg) +
   geom_histogram(mapping = aes(hwy), 
@@ -92,6 +93,14 @@ ggplot(data = mpg) +
 Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.  
 
 ```{r}
+#| label: Other Aesthetic Functions (color, shape, transparency)
+#| fig-cap: "Aes adjustments to color, shape, alpha (transparency)"
+#| fig-subcap:
+#|   - "Use color/fill function outside aes (class not mentioned)"
+#|   - "Use colour = class function within aes, and theme outside"
+#| layout-ncol: 2
+#| column: page
+
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy),
              size = 2,
@@ -102,7 +111,7 @@ ggplot(data = mpg) +
              ) +
   labs(x = "Engine Displacement (L)",
        y = "Highway Miles Per Gallon", 
-       color = "?")
+       title = "title")
 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, 
@@ -120,6 +129,16 @@ What do `facet_grid()` and `facet_wrap()` do?
 (run the code, interpret, convince your group)
 
 ```{r}
+#| label: Facet Functions 
+#| layout-ncol: 2 # Prints two graphs side-by-side
+#| fig-cap: "Facet_wrap and Facet_grid functions"
+#| fig-subcap: 
+#|   - "facet_grid(. ~ cyl)"
+#|   - "facet_grid(drv ~ .)"
+#|   - "facet_grid(drv ~ cyl)"
+#|   - "facet_wrap(~ class)"
+#|   - "facet_grid(~ class)"
+
 # Makes a plot that the commands below will modify
 q <- ggplot(mpg) + geom_point(aes(x = displ, y = hwy))
 
@@ -145,8 +164,38 @@ q + facet_grid(~ class)
 Make a bar chart `class` colored by `class`. Use the help page for `geom_bar` to choose a "color" aesthetic for class.
 
 ```{r}
+#| label: Bar Charts Colour vs Fill Functions
+#| fig-cap: "colour for points or lines, fill for bars & boxes"
+#| fig-subcap:
+#|   - "Use fill = class function (within aes)"
+#|   - "Use colour = class functiton (within aes)"
+#|   - "Remove legend with guides function"
+#| layout-row: 3 
 
+
+# Use fill function
+ggplot(data = mpg) +
+geom_bar(mapping = aes(x = class, 
+                       fill = class,
+                       alpha = 0.5))
+
+# Use colour function
+ggplot(data = mpg) +
+geom_bar(mapping = aes(x = class, 
+                       colour = class,
+                       alpha = 0.5))
+
+# Use fill, and remove legend with guides(fill = "none") outside aes
+ggplot(data = mpg) +
+geom_bar(mapping = aes(x = class, 
+                       fill = class,
+                       alpha = 0.5)) +
+  guides(fill = "none")
+
+
+# Colour function best for points and lines; fill function appropriate for bars and boxes!
 ```
+Note: Class can be "double mapped" as a variable of two aesthetics. (ie. aes(x = class, colour = class)) A single aesthetic function cannot be applied to two different variables, but a single variable can be applied many times to the same aesthetic function.
 
 ## Quiz
 
