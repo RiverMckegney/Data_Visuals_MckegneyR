@@ -11,15 +11,35 @@ format: gfm
 library()
 ```
 
+## Create active Repository On Github: Here in Rstudio
+
+> usethis::use_git()
+
+'There are # uncommitted files:'
+'! Is it ok to commit them?'
+Selection: # (Definitly)
+'Restart now?'
+Selection: # (Yes)
+
+> usethis::use_github()
 
 
 ## Your Turn 0
 
 Add a setup chunk that loads the tidyverse packages.
 
+```{r}
+#| label: Load packages
+
+library(tidyverse)
+```
+
 
 ```{r}
-mpg
+#| label: Car Dataset
+
+# head() function creates a small display containing first and last data sections
+head(mpg)
 ```
 
 
@@ -28,7 +48,8 @@ mpg
 Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
 ```{r}
-
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
 
@@ -47,7 +68,10 @@ ggplot(data = mpg) +
 Make a histogram of the `hwy` variable from `mpg`. Hint: do not supply a y variable.
 
 ```{r}
+#| label: histogram
 
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy))
 ```
 
 ## Your Turn 4
@@ -55,7 +79,11 @@ Make a histogram of the `hwy` variable from `mpg`. Hint: do not supply a y varia
 Use the help page for `geom_histogram` to make the bins 2 units wide.
 
 ```{r}
+#| label: histogram binwidth adjust
 
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(hwy), 
+                 binwidth = 2)
 ```
 
 
@@ -65,7 +93,25 @@ Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.
 
 ```{r}
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy))
+  geom_point(mapping = aes(x = displ, y = hwy),
+             size = 2,
+             shape = 21,
+             alpha = 0.5,
+             color = "orange",
+             fill = "blue"
+             ) +
+  labs(x = "Engine Displacement (L)",
+       y = "Highway Miles Per Gallon", 
+       color = "?")
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, 
+                           colour = class)) +
+  labs(x = "Engine Displacement (L)",
+       y = "Highway Miles Per Gallon", 
+       color = "Vehicle Type",
+       title = "Effect of Engine Size on MPG") +
+  theme_light()
 ```
 
 ## Help Me
@@ -77,10 +123,20 @@ What do `facet_grid()` and `facet_wrap()` do?
 # Makes a plot that the commands below will modify
 q <- ggplot(mpg) + geom_point(aes(x = displ, y = hwy))
 
-q + facet_grid(. ~ cyl)
+# Generates an engine displacement vs highway mpg graph for each category of vehicle cylinder type. Graphs are stacked and value increments matched to a standard grid so comparisons can easily be made.
+q + facet_grid(. ~ cyl) 
+
+# Creates graph sub-types for each category of vehicle drive type (front- rear-, and 4-wheel drive)
 q + facet_grid(drv ~ .)
+
+# Splits graphs by vehicle drive type and cylinder size
 q + facet_grid(drv ~ cyl)
+
+# Makes unique graphs split by each car class. Axis value labels are placed or "wrapped" around the axis margins of outermost graphs
 q + facet_wrap(~ class)
+
+# Also splits graph by car class, but all graphs are symmetrically layed across the grid
+q + facet_grid(~ class)
 ```
 
 
