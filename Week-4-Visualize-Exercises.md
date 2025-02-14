@@ -66,7 +66,14 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = class, y = hwy))
 ```
 
-![](Week-4-Visualize-Exercises_files/figure-commonmark/unnamed-chunk-5-1.png)
+![](Week-4-Visualize-Exercises_files/figure-commonmark/Appropriate%20visualizations%20-%20Boxplots-1.png)
+
+``` r
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy))
+```
+
+![](Week-4-Visualize-Exercises_files/figure-commonmark/Appropriate%20visualizations%20-%20Boxplots-2.png)
 
 ## Your Turn 3
 
