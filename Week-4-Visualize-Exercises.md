@@ -183,21 +183,39 @@ Make a bar chart `class` colored by `class`. Use the help page for
 ggplot(data = mpg) +
 geom_bar(mapping = aes(x = class, 
                        fill = class,
-                       alpha = 0.5))
+                       alpha = 0.5)) +
+  labs(x = "Type Of Car", y = "Car Frequency")
 
 # Use colour function
 ggplot(data = mpg) +
 geom_bar(mapping = aes(x = class, 
                        colour = class,
-                       alpha = 0.5))
+                       alpha = 0.5)) 
 
 # Use fill, and remove legend with guides(fill = "none") outside aes
 ggplot(data = mpg) +
 geom_bar(mapping = aes(x = class, 
                        fill = class,
                        alpha = 0.5)) +
-  guides(fill = "none")
+  labs(x = "Type Of Car", y = "Car Frequency") +
+  guides(fill = "none") 
 
+# Add another variable like drive within aesthetics
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, 
+                         fill = drv,
+                         alpha = 0.5)) +
+  labs(x = "Type Of Car", y = "Car Frequency") +
+  guides(fill = "none") 
+
+# Change position of stacked bar-plot with position function (outside aes, but within geom_bar), so instead of being on top of eachother they are paired side-by-side
+  ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, 
+                         fill = drv,
+                         alpha = 0.5), 
+           position = position_dodge()) +
+  labs(x = "Type Of Car", y = "Car Frequency") +
+  guides(fill = "none") 
 
 # Colour function best for points and lines; fill function appropriate for bars and boxes!
 ```
@@ -210,6 +228,12 @@ aes)](Week-4-Visualize-Exercises_files/figure-commonmark/Bar%20Charts%20Colour%2
 
 ![Remove legend with guides
 function](Week-4-Visualize-Exercises_files/figure-commonmark/Bar%20Charts%20Colour%20vs%20Fill%20Functions-3.png)
+
+![Use fill = class function (within
+aes)](Week-4-Visualize-Exercises_files/figure-commonmark/Bar%20Charts%20Colour%20vs%20Fill%20Functions-4.png)
+
+![Use colour = class functiton (within
+aes)](Week-4-Visualize-Exercises_files/figure-commonmark/Bar%20Charts%20Colour%20vs%20Fill%20Functions-5.png)
 
 colour for points or lines, fill for bars & boxes
 
@@ -233,11 +257,40 @@ ggplot(mpg) +
 ![](Week-4-Visualize-Exercises_files/figure-commonmark/unnamed-chunk-11-1.png)
 
 ``` r
-  ggsave("example.jpg")
+ggsave("example1.jpg")
 ```
 
     Saving 7 x 5 in image
     `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+
+``` r
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(aes(color = class)) + 
+  geom_smooth(color = "black", # outside aes()
+              se = FALSE, 
+              method = "lm") +
+  scale_color_viridis_d()
+```
+
+    `geom_smooth()` using formula = 'y ~ x'
+
+![](Week-4-Visualize-Exercises_files/figure-commonmark/unnamed-chunk-11-2.png)
+
+``` r
+ggsave("example2.jpg", width = 6, height = 4)
+```
+
+    `geom_smooth()` using formula = 'y ~ x'
+
+The geom_smooth() function allows user to add another geometry over the
+same graph. Adding aes(x =, y =) in the ggplot() applies this format to
+the rest of the functions (embedded into everything else). This allows
+the removal of aes() functions from the geometries functions. Additional
+aes customizations can then be done with respect to each geometry.
+
+Adding se = FALSE removes the standard error outline. The method
+function changes what is being done to data like use of models.
+scale_color functions add a pre-designed color scheme to the figure.
 
 ------------------------------------------------------------------------
 
