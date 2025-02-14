@@ -58,8 +58,13 @@ ggplot(data = mpg) +
 Replace this scatterplot with one that draws boxplots. Use the cheatsheet. Try your best guess.
 
 ```{r}
+#| label: Appropriate visualizations - Boxplots
+
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = class, y = hwy))
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy))
 ```
 
 
